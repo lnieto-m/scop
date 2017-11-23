@@ -6,7 +6,7 @@
 #    By: hivian <hivian@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/25 10:17:30 by hivian            #+#    #+#              #
-#    Updated: 2016/08/18 11:51:13 by lnieto-m         ###   ########.fr        #
+#    Updated: 2017/11/23 10:00:15 by lnieto-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJ  		= $(SRC:%.c=objs/%.o)
 
 
 SRC_DIR 	= ./srcs/
-INCLUDE_DIR = -I ./incs/ -I libft/includes -I minilibx_macos/ 
+INCLUDE_DIR = -I ./incs/ -I libft/includes -I minilibx_macos/
 
 all: objs $(NAME)
 

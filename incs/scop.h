@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scop.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hivian <hivian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/02/23 14:28:44 by hivian            #+#    #+#             */
-/*   Updated: 2016/08/17 16:34:44 by lnieto-m         ###   ########.fr       */
+/*   Created: 2017/11/23 10:44:13 by lnieto-m          #+#    #+#             */
+/*   Updated: 2017/11/23 11:52:31 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 # define SCOP_H
 
 # include "mlx_macros.h"
-# include "libft.h"
+# include "libftprintf.h"
 # include <mlx.h>
 # include <mlx_opengl.h>
 # include <math.h>
 # include <stdbool.h>
+# include <openGL/gl3.h>
 
-# define WIN_WIDTH		700
-# define WIN_HEIGHT		500
+# define WIN_WIDTH		640
+# define WIN_HEIGHT		480
 # define MAP_WIDTH		24
 # define MAP_HEIGHT		24
 
@@ -39,6 +40,7 @@
 typedef struct s_color	t_color;
 typedef struct s_pos	t_pos;
 typedef struct s_env	t_env;
+typedef struct s_objct	t_object;
 typedef int				(*t_tab)(int, int, int, t_env *);
 
 struct			s_color
@@ -48,6 +50,14 @@ struct			s_color
 	int			red;
 	int			green;
 	int			blue;
+};
+
+struct			s_object
+{
+	char		*name;
+	float		vertices[4];
+	float		**faces;
+	int			shading;
 };
 
 struct			s_pos
@@ -73,6 +83,7 @@ struct			s_env
 	t_pos		pos;
 	t_tab		tab[5];
 	t_color		color;
+	t_object	object;
 };
 
 #endif

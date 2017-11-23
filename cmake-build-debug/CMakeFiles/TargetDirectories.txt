@@ -1,3 +1,0 @@
-/Users/lnieto-m/github/scop/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/lnieto-m/github/scop/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/lnieto-m/github/scop/cmake-build-debug/CMakeFiles/scop.dir
