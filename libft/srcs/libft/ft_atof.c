@@ -1,0 +1,52 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atof.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/11/23 12:48:35 by lnieto-m          #+#    #+#             */
+/*   Updated: 2017/11/23 13:01:11 by lnieto-m         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libt.h"
+
+double		ft_atof(const char *str)
+{
+	double		result;
+	int			index;
+	int			tmp;
+
+	result = 0;
+	index = 0;
+	tmp = index;
+	while (str[index] == '\t' || str[index] == ' ' || str[index] == '\n'
+			|| str[index] == '\r' || str[index] == '\f' || str[index] == '\v')
+		index++;
+	if (str[index] == '-' || str[index] == '+')
+	{
+		tmp = index;
+		index++;
+	}
+	while (str[index] <= '9' && str[index] >= '0')
+	{
+		result *= 10;
+		result += str[index] - 48;
+		index++;
+	}
+	if (str[index] == '.')
+	{
+		index++;
+		int indice = 10;
+		while (str[index] <= '9' && str[index] >= '0')
+		{
+			result += (str[index] - 48) / indice;
+			indice *= 10;
+			index++;
+		}
+	}
+	if (str[tmp] == '-')
+		result *= -1;
+	return (result);
+}

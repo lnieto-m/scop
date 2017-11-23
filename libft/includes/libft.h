@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 11:27:36 by lnieto-m          #+#    #+#             */
-/*   Updated: 2016/07/27 11:21:23 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/11/23 13:00:00 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void				ft_strdel(char **as);
 void				ft_strclr(char *s);
 int					ft_atoi(const char *str);
 long long			ft_atol(const char *str);
+double				ft_atof(const char *str);
 size_t				ft_strlen(const char *str);
 char				*ft_strdup(const char *str);
 char				*ft_strcpy(char *dest, const char *src);
