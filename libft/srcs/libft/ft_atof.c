@@ -6,11 +6,11 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 12:48:35 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/11/23 13:01:11 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/11/25 11:17:03 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libt.h"
+#include "libft.h"
 
 double		ft_atof(const char *str)
 {

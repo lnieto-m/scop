@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 10:44:13 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/11/23 11:52:31 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/11/25 11:31:33 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <mlx_opengl.h>
 # include <math.h>
 # include <stdbool.h>
+# include <fcntl.h>
 # include <openGL/gl3.h>
 
 # define WIN_WIDTH		640
@@ -40,7 +41,7 @@
 typedef struct s_color	t_color;
 typedef struct s_pos	t_pos;
 typedef struct s_env	t_env;
-typedef struct s_objct	t_object;
+typedef struct s_object	t_object;
 typedef int				(*t_tab)(int, int, int, t_env *);
 
 struct			s_color
@@ -54,8 +55,10 @@ struct			s_color
 
 struct			s_object
 {
+	int			face_count;
+	int			vertices_count;
 	char		*name;
-	float		vertices[4];
+	float		**vertices;
 	float		**faces;
 	int			shading;
 };
@@ -85,5 +88,7 @@ struct			s_env
 	t_color		color;
 	t_object	object;
 };
+
+int				object_loader(char *file_name, t_object *object);
 
 #endif

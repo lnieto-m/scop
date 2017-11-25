@@ -6,7 +6,7 @@
 #    By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 14:59:47 by lnieto-m          #+#    #+#              #
-#    Updated: 2016/07/27 11:23:12 by lnieto-m         ###   ########.fr        #
+#    Updated: 2017/11/25 11:03:30 by lnieto-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC_NAME = libft/ft_isdigit.c \
 		   libft/ft_strstr.c \
 		   libft/ft_atoi.c \
 		   libft/ft_atol.c \
+		   libft/ft_atof.c \
 		   libft/ft_isprint.c \
 		   libft/ft_memcpy.c \
 		   libft/ft_putendl.c \

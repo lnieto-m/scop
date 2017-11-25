@@ -6,7 +6,7 @@
 #    By: hivian <hivian@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/25 10:17:30 by hivian            #+#    #+#              #
-#    Updated: 2017/11/23 10:00:15 by lnieto-m         ###   ########.fr        #
+#    Updated: 2017/11/25 11:03:59 by lnieto-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ CC 	 		= clang -Wall -Wextra -Werror
 LIBS		= -L libft/ -lft -L minilibx_macos/ -lmlx -framework OpenGL -framework AppKit
 
 SRC  		= main.c \
+			parser.c \
 
 OBJ  		= $(SRC:%.c=objs/%.o)
 
