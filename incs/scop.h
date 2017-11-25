@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 10:44:13 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/11/25 11:31:33 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/11/25 14:31:45 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ struct			s_object
 	int			vertices_count;
 	char		*name;
 	float		**vertices;
-	float		**faces;
+	int			**faces;
 	int			shading;
 };
 
@@ -90,5 +90,6 @@ struct			s_env
 };
 
 int				object_loader(char *file_name, t_object *object);
+void			display(t_object object);
 
 #endif

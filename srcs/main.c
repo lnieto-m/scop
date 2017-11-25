@@ -6,14 +6,14 @@
 /*   By: hivian <hivian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/15 15:11:00 by hivian            #+#    #+#             */
-/*   Updated: 2017/11/25 11:50:14 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/11/25 14:19:37 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 #include <stdio.h>
 
-int		display(void)
+int		BGONETHOT_display(void)
 {
 	printf("blblblblb\n");
 	//glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
@@ -59,7 +59,7 @@ int		display(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glUseProgram(shader_programme);
 	glBindVertexArray(vao);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 3);
 	return(0);
 }
 
@@ -67,6 +67,8 @@ int					main(int ac, char **av)
 {
 	t_env			e;
 
+	if (ac > 1)
+		object_loader(av[1], &e.object);
 	if (!(e.mlx = mlx_init()))
 	{
 		ft_putendl("Env error");
@@ -74,15 +76,14 @@ int					main(int ac, char **av)
 	}
 	e.win = mlx_new_opengl_window(e.mlx, WIN_WIDTH, WIN_HEIGHT, "scop");
 	mlx_opengl_window_set_context(e.win);
-	const GLubyte* renderer = glGetString(GL_RENDERER); // get renderer string
-	const GLubyte* version = glGetString(GL_VERSION); // version as a string
+	const GLubyte* renderer = glGetString(GL_RENDERER);
+	const GLubyte* version = glGetString(GL_VERSION);
 	ft_putstr("Renderer: ");
 	ft_putendl((char *)renderer);
 	ft_putstr("OpenGL version supported: ");
 	ft_putendl((char *)version);
-	display(); // Register display callback handler for window re-paint
-	if (ac > 1)
-		object_loader(av[1], &e.object);
+	display(e.object);
+	printf("faces: %i, vertices: %i\n", e.object.face_count, e.object.vertices_count);
 	mlx_opengl_swap_buffers(e.win);
 	mlx_loop(e.mlx);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 12:48:35 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/11/25 11:17:03 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/11/25 14:13:54 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ double		ft_atof(const char *str)
 		int indice = 10;
 		while (str[index] <= '9' && str[index] >= '0')
 		{
-			result += (str[index] - 48) / indice;
+			result += (double)(str[index] - 48) / indice;
 			indice *= 10;
 			index++;
 		}
