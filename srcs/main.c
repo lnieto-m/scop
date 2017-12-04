@@ -6,7 +6,7 @@
 /*   By: hivian <hivian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/15 15:11:00 by hivian            #+#    #+#             */
-/*   Updated: 2017/11/25 14:19:37 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/04 10:11:49 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int					main(int ac, char **av)
 
 	if (ac > 1)
 		object_loader(av[1], &e.object);
+	printf("faces: %i, vertices: %i\n", e.object.face_count, e.object.vertices_count);
 	if (!(e.mlx = mlx_init()))
 	{
 		ft_putendl("Env error");
@@ -83,7 +84,6 @@ int					main(int ac, char **av)
 	ft_putstr("OpenGL version supported: ");
 	ft_putendl((char *)version);
 	display(e.object);
-	printf("faces: %i, vertices: %i\n", e.object.face_count, e.object.vertices_count);
 	mlx_opengl_swap_buffers(e.win);
 	mlx_loop(e.mlx);
 	return (0);

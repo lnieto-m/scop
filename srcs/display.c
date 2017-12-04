@@ -6,112 +6,29 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 13:32:18 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/11/25 17:04:40 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/04 12:58:42 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void		draw(t_object obj, int size)
+GLuint		create_shader()
 {
-	float		*points;
-	int			i;
-	int			j;
-	int			k;
-
-	GLfloat g_color_buffer_data[] = {
-	    0.583f,  0.771f,  0.014f,
-	    0.609f,  0.115f,  0.436f,
-	    0.327f,  0.483f,  0.844f,
-	    0.822f,  0.569f,  0.201f,
-	    0.435f,  0.602f,  0.223f,
-	    0.310f,  0.747f,  0.185f,
-	    0.597f,  0.770f,  0.761f,
-	    0.559f,  0.436f,  0.730f,
-	    0.359f,  0.583f,  0.152f,
-	    0.483f,  0.596f,  0.789f,
-	    0.559f,  0.861f,  0.639f,
-	    0.195f,  0.548f,  0.859f,
-	    0.014f,  0.184f,  0.576f,
-	    0.771f,  0.328f,  0.970f,
-	    0.406f,  0.615f,  0.116f,
-	    0.676f,  0.977f,  0.133f,
-	    0.971f,  0.572f,  0.833f,
-	    0.140f,  0.616f,  0.489f,
-	    0.997f,  0.513f,  0.064f,
-	    0.945f,  0.719f,  0.592f,
-	    0.543f,  0.021f,  0.978f,
-	    0.279f,  0.317f,  0.505f,
-	    0.167f,  0.620f,  0.077f,
-	    0.347f,  0.857f,  0.137f,
-	    0.055f,  0.953f,  0.042f,
-	    0.714f,  0.505f,  0.345f,
-	    0.783f,  0.290f,  0.734f,
-	    0.722f,  0.645f,  0.174f,
-	    0.302f,  0.455f,  0.848f,
-	    0.225f,  0.587f,  0.040f,
-	    0.517f,  0.713f,  0.338f,
-	    0.053f,  0.959f,  0.120f,
-	    0.393f,  0.621f,  0.362f,
-	    0.673f,  0.211f,  0.457f,
-	    0.820f,  0.883f,  0.371f,
-	    0.982f,  0.099f,  0.879f
-	};
-
-
-	i = 1;
-	j = 0;
-	k = 0;
-	printf("size: %i, faces: %i\n", size, obj.face_count);
-	if (!(points = (float*)malloc(size * 3 * sizeof(float))))
-		return;
-	while (k < obj.face_count) {
-		while (i < obj.faces[k][0])
-		{
-			points[j++] = obj.vertices[obj.faces[k][i]][0];
-			points[j++] = obj.vertices[obj.faces[k][i]][1];
-			points[j++] = obj.vertices[obj.faces[k][i]][2];
-			printf("%f %f %f\n", points[j - 1], points[j - 2], points[j - 3]);
-			i++;
-		}
-		i = 1;
-		k++;
-	}
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
-	GLuint vbo = 0;
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, size * 3 * sizeof(float), points, GL_STATIC_DRAW);
-
-
-	GLuint vao = 0;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
-	GLuint colorbuffer;
-	glGenBuffers(1, &colorbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
-
 	const char* vertex_shader =
 	"#version 400\n"
-	"in vec3 vp;"
-	"layout(location = 1) in vec3 vertexColor;"
-	"out vec3 fragmentColor;"
+	"layout(location = 0) in vec3 vertex_position;"
+	"layout(location = 1) in vec3 vertex_colour;"
+	"out vec3 colour;"
 	"void main() {"
-	"  gl_Position = vec4(vp, 1.0);"
-	"  fragmentColor = vertexColor;"
+	"  colour = vertex_colour;"
+	"  gl_Position = vec4(vertex_position, 1.0);"
 	"}";
 	const char* fragment_shader =
 	"#version 400\n"
-	"in vec3 fragmentColor;"
-	"out vec3 frag_colour;"
+	"in vec3 colour;"
+	"out vec4 frag_colour;"
 	"void main() {"
-	"  frag_colour = fragmentColor;"
+	"  frag_colour = vec4(1.0, 1.0, 0.0, 1.0);"
 	"}";
 	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vs, 1, &vertex_shader, NULL);
@@ -123,32 +40,79 @@ void		draw(t_object obj, int size)
 	glAttachShader(shader_programme, fs);
 	glAttachShader(shader_programme, vs);
 	glLinkProgram(shader_programme);
+	return(shader_programme);
+}
 
+void		draw_face(t_object obj, int size)
+{
+	int			face_i;
+	int			points_i;
+	int			list_i;
+	GLfloat		*points;
+	t_vector	rot;
+
+	rot.x = 0;
+	rot.y = 0;
+	rot.z = 0;
+	face_i = 0;
+	list_i = 0;
+	points_i = 0;
+
+	float colours[] = {
+		0.5f, 0.0f,  0.0f,
+		0.0f, 0.5f,  0.0f,
+		0.0f, 0.0f,  0.5f
+	};
+
+	if (!(points = (float*)malloc(size * 3 * sizeof(GLfloat))))
+		return;
+	while (list_i < obj.face_count)
+	{
+		while(face_i < 3)
+		{
+			rotation(obj.vertices[obj.faces[list_i][face_i] - 1], rot);
+			points[points_i++] = obj.vertices[obj.faces[list_i][face_i] - 1][0] / 3;
+			points[points_i++] = obj.vertices[obj.faces[list_i][face_i] - 1][1] / 3;
+			points[points_i++] = obj.vertices[obj.faces[list_i][face_i++] - 1][2] / 3;
+		}
+		face_i = 0;
+		list_i++;
+	}
+	GLuint vbo = 0;
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, size * 3 * sizeof(GLfloat), points, GL_STATIC_DRAW);
+
+	GLuint colours_vbo = 0;
+	glGenBuffers(1, &colours_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, colours_vbo);
+	glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), colours, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-	glVertexAttribPointer(
-		1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-		3,                                // size
-		GL_FLOAT,                         // type
-		GL_FALSE,                         // normalized?
-		0,                                // stride
-		(void*)0                          // array buffer offset
-	);
+	glBindBuffer(GL_ARRAY_BUFFER, colours_vbo);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glUseProgram(shader_programme);
-	glBindVertexArray(vao);
-	glDrawArrays(GL_TRIANGLE_FAN, 0, 3 * size);
+	glDrawArrays(GL_TRIANGLES, 0, size);
+	glDeleteBuffers(1, &vbo);
+	glDeleteBuffers(1, &colours_vbo);
+	free(points);
 }
 
 void		display(t_object object)
 {
-	int 	size;
-	int 	i;
-
-	size = 0;
-	i = 0;
-	while (i < object.face_count)
-		size += object.faces[i++][0];
-	draw(object, size);
+	GLuint vao = 0;
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	// glEnable(GL_CULL_FACE);
+	GLuint shader_programme = create_shader();
+	glUseProgram(shader_programme);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	draw_face(object, object.face_count * 3);
+	glDeleteVertexArrays(1, &vao);
+	glDeleteProgram(shader_programme);
 }

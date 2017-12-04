@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 10:44:13 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/11/25 14:31:45 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/02 15:03:02 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <openGL/gl3.h>
 
 # define WIN_WIDTH		640
-# define WIN_HEIGHT		480
+# define WIN_HEIGHT		640
 # define MAP_WIDTH		24
 # define MAP_HEIGHT		24
 
@@ -38,19 +38,16 @@
 # define GREY			"\033[1;30m"
 # define YELLOW			"\033[33m"
 
-typedef struct s_color	t_color;
-typedef struct s_pos	t_pos;
 typedef struct s_env	t_env;
+typedef struct s_vector t_vector;
 typedef struct s_object	t_object;
 typedef int				(*t_tab)(int, int, int, t_env *);
 
-struct			s_color
+struct			s_vector
 {
-	int			x;
-	int			y;
-	int			red;
-	int			green;
-	int			blue;
+	float		x;
+	float		y;
+	float		z;
 };
 
 struct			s_object
@@ -61,15 +58,6 @@ struct			s_object
 	float		**vertices;
 	int			**faces;
 	int			shading;
-};
-
-struct			s_pos
-{
-	double		zoom;
-	double		x;
-	double		y;
-	double		move_x;
-	double		move_y;
 };
 
 struct			s_env
@@ -83,13 +71,11 @@ struct			s_env
 	int			max_iter;
 	int			flag;
 	int			stop_time;
-	t_pos		pos;
-	t_tab		tab[5];
-	t_color		color;
 	t_object	object;
 };
 
 int				object_loader(char *file_name, t_object *object);
 void			display(t_object object);
+void			rotation(float *point, t_vector vector);
 
 #endif
