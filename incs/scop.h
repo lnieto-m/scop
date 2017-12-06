@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 10:44:13 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/02 15:03:02 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/06 15:03:25 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@
 # include <mlx_opengl.h>
 # include <math.h>
 # include <stdbool.h>
+# include <time.h>
 # include <fcntl.h>
 # include <openGL/gl3.h>
 
-# define WIN_WIDTH		640
-# define WIN_HEIGHT		640
+# define WIN_WIDTH		720
+# define WIN_HEIGHT		720
 # define MAP_WIDTH		24
 # define MAP_HEIGHT		24
 
@@ -56,8 +57,10 @@ struct			s_object
 	int			vertices_count;
 	char		*name;
 	float		**vertices;
+	float		*colors;
 	int			**faces;
 	int			shading;
+	double		rotation_y;
 };
 
 struct			s_env
@@ -76,6 +79,9 @@ struct			s_env
 
 int				object_loader(char *file_name, t_object *object);
 void			display(t_object object);
-void			rotation(float *point, t_vector vector);
+GLfloat			*rotation_y_matrix(float angle);
+GLfloat			*projection_matrix(float fov, float near, float far, float aspect);
+float			*generate_colors(int obj_size);
+int				key_p(int keycode, t_env *e);
 
 #endif
