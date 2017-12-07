@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 10:44:13 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/06 15:03:25 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/07 14:58:06 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,10 @@ struct			s_object
 	int			**faces;
 	int			shading;
 	double		rotation_y;
+	char		*texture;
+	float 		*uv_map;
+	int 		transition_state;
+	float		transition_value;
 };
 
 struct			s_env
@@ -81,6 +85,7 @@ int				object_loader(char *file_name, t_object *object);
 void			display(t_object object);
 GLfloat			*rotation_y_matrix(float angle);
 GLfloat			*projection_matrix(float fov, float near, float far, float aspect);
+GLfloat			*view_matrix(void);
 float			*generate_colors(int obj_size);
 int				key_p(int keycode, t_env *e);
 
