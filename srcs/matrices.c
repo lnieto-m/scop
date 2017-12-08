@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 11:30:43 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/08 10:49:20 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/08 11:21:36 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ void		translation_matrix(GLfloat *matrix, float x, float y, float z)
 {
 	ft_bzero(matrix, 16 * sizeof(GLfloat));
 	matrix[0] = 1.0f;
-	matrix[3] = x;
 	matrix[5] = 1.0f;
-	matrix[7] = y;
 	matrix[10] = 1.0f;
-	matrix[11] = z;
+	matrix[12] = x;
+	matrix[13] = y;
+	matrix[14] = z;
 	matrix[15] = 1.0f;
 }
 

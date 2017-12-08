@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 14:41:45 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/07 18:43:33 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/08 11:34:21 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,17 @@ int			key_p(int keycode, t_env *e)
 		}
 	}
 	if (keycode == K_W)
-		e->object.position.z -= 0.25;
+		e->object.position.z -= 0.10;
 	if (keycode == K_S)
-		e->object.position.z += 0.25;
+		e->object.position.z += 0.10;
 	if (keycode == K_D)
-		e->object.position.x += 0.25;
+		e->object.position.x += 0.10;
 	if (keycode == K_A)
-		e->object.position.x -= 0.25;
+		e->object.position.x -= 0.10;
+	if (keycode == K_UP)
+		e->object.position.y += 0.10;
+	if (keycode == K_DOWN)
+		e->object.position.y -= 0.10;
 	translation_matrix(e->object.translation_matrix, e->object.position.x,
 		e->object.position.y, e->object.position.z);
 	display(e->object, e->shader_programme);

@@ -6,7 +6,7 @@
 /*   By: hivian <hivian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/15 15:11:00 by hivian            #+#    #+#             */
-/*   Updated: 2017/12/07 18:40:19 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/08 12:12:16 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,29 @@ GLfloat				*uv_map(int size)
 	return (uv_map);
 }
 
+float				center_point(float *points, int size)
+{
+	float		result;
+	int			i;
+
+	i = 0;
+	result = 0;
+	while (i < size * 3)
+	{
+		result += points[i];
+		i += 3;
+	}
+	result /= size;
+	i = 0;
+	while (i < size * 3)
+	{
+		points[i] += result;
+		i += 3;
+	}
+	printf("result %f\n", result);
+	return result;
+}
+
 int					main(int ac, char **av)
 {
 	t_env			e;
@@ -73,6 +96,9 @@ int					main(int ac, char **av)
 	load_texture(&e);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
+	float test = center_point(e.object.points, e.object.face_count * 3);
+	(void)test;
+	// translation_matrix(e.object.translation_matrix, test[0], test[1], test[2]);
 	e.shader_programme = create_shader();
 	display(e.object, e.shader_programme);
 	mlx_opengl_swap_buffers(e.win);

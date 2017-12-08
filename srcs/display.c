@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 13:32:18 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/08 11:16:55 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/08 11:39:01 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,8 @@ GLuint		create_shader()
 	"out vec2 UV;"
 	"out float transition_value;"
 	"void main() {"
-	"  mat4 transl = mat4("
-	"	 vec4(1.0, 0.0, 0.0, 0.0),"
-	"	 vec4(0.0, 1.0, 0.0, 0.0),"
-	"	 vec4(0.0, 0.0, 1.0, 0.0),"
-	"	 vec4(0.3, -0.5, -3.0, 1.0)"
-	"  );"
 	"  fragmentColor = vertex_color;"
-	"  mat4 model = transl * rotationy * scale;"
+	"  mat4 model = translation * rotationy * scale;"
 	"  mat4 MVP = projection * model;"
 	"  gl_Position = MVP * vec4(vertex_position, 1.0);"
 	"  UV = vertexUV;"
