@@ -6,16 +6,17 @@
 /*   By: hivian <hivian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/15 15:11:00 by hivian            #+#    #+#             */
-/*   Updated: 2017/12/07 15:22:35 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/07 18:40:19 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
-#include <stdio.h>
 
 int					loop_hook(t_env *e)
 {
-	e->object.rotation_y -= 2;
+	e->object.rotation_y += 2;
+	if (e->object.rotation_y >= 360.0f)
+		e->object.rotation_y = 0;
 	if (e->object.transition_state != 0
 		&& e->object.transition_value != 0
 		&& e->object.transition_value != 1)
@@ -28,12 +29,13 @@ int					loop_hook(t_env *e)
 			|| e->object.transition_value >= 1.0f)
 			e->object.transition_state = 0;
 	}
-	display(e->object);
+	rotation_y_matrix(e->object.rotation_matrix, e->object.rotation_y);
+	display(e->object, e->shader_programme);
 	mlx_opengl_swap_buffers(e->win);
 	return (0);
 }
 
-GLfloat		*uv_map(int size)
+GLfloat				*uv_map(int size)
 {
 	GLfloat	*uv_map;
 	int 	i;
@@ -56,11 +58,9 @@ GLfloat		*uv_map(int size)
 int					main(int ac, char **av)
 {
 	t_env			e;
-	int				size_line, endian, bpp, h, w;
 
 	if (ac > 1)
-		object_loader(av[1], &e.object);
-	printf("faces: %i, vertices: %i\n", e.object.face_count, e.object.vertices_count);
+		init_object(&e.object, av[1]);
 	if (!(e.mlx = mlx_init()))
 	{
 		ft_putendl("Env error");
@@ -68,19 +68,13 @@ int					main(int ac, char **av)
 	}
 	e.win = mlx_new_opengl_window(e.mlx, WIN_WIDTH, WIN_HEIGHT, "scop");
 	mlx_opengl_window_set_context(e.win);
-	const GLubyte* renderer = glGetString(GL_RENDERER);
-	const GLubyte* version = glGetString(GL_VERSION);
-	ft_putstr("Renderer: ");
-	ft_putendl((char *)renderer);
-	ft_putstr("OpenGL version supported: ");
-	ft_putendl((char *)version);
-	void *xpm_image = mlx_xpm_file_to_image(e.mlx, "bois.xpm", &h, &w);
-	e.object.texture = mlx_get_data_addr(xpm_image, &bpp, &size_line, &endian);
-	e.object.rotation_y = 0;
-	e.object.transition_value = 0.0f;
-	e.object.colors = generate_colors(e.object.face_count * 3);
-	e.object.uv_map = uv_map(e.object.face_count * 3);
-	display(e.object);
+	printf("Renderer: %s\nOpenGL version supported: %s\n",
+		glGetString(GL_RENDERER), glGetString(GL_VERSION));
+	load_texture(&e);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	e.shader_programme = create_shader();
+	display(e.object, e.shader_programme);
 	mlx_opengl_swap_buffers(e.win);
 	mlx_hook(e.win, 2, (1L << 0), key_p, &e);
 	mlx_loop_hook(e.mlx, loop_hook, &e);

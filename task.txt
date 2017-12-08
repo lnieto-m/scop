@@ -1,6 +1,6 @@
 model       |done
 colors      |done
-perspective |
+perspective |done
 rotations   |
-translation |
-textures    |
+translation |done
+textures    |done

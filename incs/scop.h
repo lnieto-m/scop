@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 10:44:13 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/07 14:58:06 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/07 18:45:31 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "libftprintf.h"
 # include <mlx.h>
 # include <mlx_opengl.h>
+# include <stdio.h>
 # include <math.h>
 # include <stdbool.h>
 # include <time.h>
@@ -58,6 +59,7 @@ struct			s_object
 	char		*name;
 	float		**vertices;
 	float		*colors;
+	float		*points;
 	int			**faces;
 	int			shading;
 	double		rotation_y;
@@ -65,6 +67,12 @@ struct			s_object
 	float 		*uv_map;
 	int 		transition_state;
 	float		transition_value;
+	GLfloat		*projection_matrix;
+	GLfloat		*translation_matrix;
+	GLfloat		*scale_matrix;
+	GLfloat		*rotation_matrix;
+	GLfloat		*view_matrix;
+	t_vector	position;
 };
 
 struct			s_env
@@ -72,20 +80,27 @@ struct			s_env
 	void		*mlx;
 	void		*win;
 	void		*img;
-	int			handle_red;
-	int			handle_green;
-	int			handle_blue;
-	int			max_iter;
-	int			flag;
-	int			stop_time;
 	t_object	object;
+	GLuint		shader_programme;
 };
 
+void			display(t_object object, GLint shader_programme);
+GLuint			create_shader();
+void			init_object(t_object *obj, char *filename);
 int				object_loader(char *file_name, t_object *object);
-void			display(t_object object);
-GLfloat			*rotation_y_matrix(float angle);
-GLfloat			*projection_matrix(float fov, float near, float far, float aspect);
-GLfloat			*view_matrix(void);
+GLfloat			*uv_map(int size);
+
+/*
+** Matrices
+*/
+
+GLfloat 		*create_matrix(int size);
+void			rotation_y_matrix(GLfloat *matrix, float angle);
+void			projection_matrix(GLfloat *matrix, float fov, float aspect);
+void			translation_matrix(GLfloat *matrix, float x, float y, float z);
+void			scale_matrix(GLfloat *matrix, float x, float y, float z);
+
+void			load_texture(t_env *e);
 float			*generate_colors(int obj_size);
 int				key_p(int keycode, t_env *e);
 

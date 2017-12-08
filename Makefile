@@ -6,7 +6,7 @@
 #    By: hivian <hivian@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/25 10:17:30 by hivian            #+#    #+#              #
-#    Updated: 2017/12/06 15:04:09 by lnieto-m         ###   ########.fr        #
+#    Updated: 2017/12/07 18:38:45 by lnieto-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC  		= main.c \
 			matrices.c \
 			key_handling.c \
 			colors.c \
+			init.c \
 
 OBJ  		= $(SRC:%.c=objs/%.o)
 

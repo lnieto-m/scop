@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 14:55:48 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/06 15:22:33 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/07 17:54:58 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ float		*generate_colors(int obj_size)
 	int		i;
 	int		j;
 
+	srand(time(NULL));
 	face_color = 0;
 	i = 0;
 	j = 0;
