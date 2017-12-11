@@ -6,60 +6,11 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 13:32:18 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/08 11:39:01 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/11 11:31:06 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
-
-GLuint		create_shader()
-{
-	const char* vertex_shader =
-	"#version 400\n"
-	"layout(location = 0) in vec3 vertex_position;"
-	"layout(location = 1) in vec3 vertex_color;"
-	"layout(location = 2) in vec2 vertexUV;"
-	"uniform mat4 rotationy;"
-	"uniform mat4 projection;"
-	"uniform mat4 view;"
-	"uniform mat4 scale;"
-	"uniform mat4 translation;"
-	"uniform float transition;"
-	"out vec3 fragmentColor;"
-	"out vec2 UV;"
-	"out float transition_value;"
-	"void main() {"
-	"  fragmentColor = vertex_color;"
-	"  mat4 model = translation * rotationy * scale;"
-	"  mat4 MVP = projection * model;"
-	"  gl_Position = MVP * vec4(vertex_position, 1.0);"
-	"  UV = vertexUV;"
-	"  transition_value = transition;"
-	"}";
-	const char* fragment_shader =
-	"#version 400\n"
-	"in vec3 fragmentColor;"
-	"in vec2 UV;"
-	"in float transition_value;"
-	"uniform sampler2D myTextureSampler;"
-	"out vec4 frag_colour;"
-	"void main() {"
-	"  vec4 text = vec4(texture(myTextureSampler, UV).rgb, 1.0);"
-	"  vec4 colour = vec4(fragmentColor, 1.0);"
-	"  frag_colour = mix(text, colour, transition_value);"
-	"}";
-	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vs, 1, &vertex_shader, NULL);
-	glCompileShader(vs);
-	GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fs, 1, &fragment_shader, NULL);
-	glCompileShader(fs);
-	GLuint shader_programme = glCreateProgram();
-	glAttachShader(shader_programme, fs);
-	glAttachShader(shader_programme, vs);
-	glLinkProgram(shader_programme);
-	return(shader_programme);
-}
 
 void		draw_face(t_object obj, int size, GLuint shader_programme)
 {

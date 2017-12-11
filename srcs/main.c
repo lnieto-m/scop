@@ -6,7 +6,7 @@
 /*   By: hivian <hivian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/15 15:11:00 by hivian            #+#    #+#             */
-/*   Updated: 2017/12/08 12:12:16 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/11 12:59:36 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int					loop_hook(t_env *e)
 {
-	e->object.rotation_y += 2;
+	e->object.rotation_y += 1;
 	if (e->object.rotation_y >= 360.0f)
 		e->object.rotation_y = 0;
 	if (e->object.transition_state != 0
@@ -55,33 +55,40 @@ GLfloat				*uv_map(int size)
 	return (uv_map);
 }
 
-float				center_point(float *points, int size)
+void				center_points(float *points, int size)
 {
-	float		result;
+	float		result[3];
 	int			i;
 
 	i = 0;
-	result = 0;
+	result[0] = 0;
+	result[1] = 0;
+	result[2] = 0;
 	while (i < size * 3)
 	{
-		result += points[i];
+		result[0] += points[i];
+		result[1] += points[i + 1];
+		result[2] += points[i + 2];
 		i += 3;
 	}
-	result /= size;
+	result[0] /= size;
+	result[1] /= size;
+	result[2] /= size;
 	i = 0;
 	while (i < size * 3)
 	{
-		points[i] += result;
+		points[i] -= result[0];
+		points[i + 1] -= result[1];
+		points[i + 2] -= result[2];
 		i += 3;
 	}
-	printf("result %f\n", result);
-	return result;
 }
 
 int					main(int ac, char **av)
 {
 	t_env			e;
 
+	printf("test: %i\n", ft_atoi("7/3/7"));
 	if (ac > 1)
 		init_object(&e.object, av[1]);
 	if (!(e.mlx = mlx_init()))
@@ -96,10 +103,8 @@ int					main(int ac, char **av)
 	load_texture(&e);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-	float test = center_point(e.object.points, e.object.face_count * 3);
-	(void)test;
-	// translation_matrix(e.object.translation_matrix, test[0], test[1], test[2]);
-	e.shader_programme = create_shader();
+	center_points(e.object.points, e.object.face_count * 3);
+	e.shader_programme = create_shader_program();
 	display(e.object, e.shader_programme);
 	mlx_opengl_swap_buffers(e.win);
 	mlx_hook(e.win, 2, (1L << 0), key_p, &e);

@@ -1,6 +1,7 @@
 model       |done
 colors      |done
 perspective |done
-rotations   |
+rotations   |done
 translation |done
 textures    |done
+parsing verification

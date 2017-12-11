@@ -6,12 +6,11 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 11:01:33 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/04 12:59:54 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/11 12:34:59 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
-#include <stdio.h>
 
 static void	parse_line(t_object *object, char *line, int *vert_i, int *face_i)
 {
@@ -25,7 +24,6 @@ static void	parse_line(t_object *object, char *line, int *vert_i, int *face_i)
 		|| (splitted_line = ft_strsplit(line, ' ')) == NULL
 		|| ft_strcmp(splitted_line[0], "#") == 0)
 		return;
-	// printf("parser.c line 27: line : %s, vert: %i, face: %i\n", line, *vert_i, *face_i);
 	if (ft_strcmp(splitted_line[0], "v") == 0)
 	{
 		while (splitted_line[tab_len] != 0)
@@ -39,7 +37,6 @@ static void	parse_line(t_object *object, char *line, int *vert_i, int *face_i)
 			object->vertices[*vert_i][3] = ft_atof(splitted_line[4]);
 		else
 			object->vertices[*vert_i][3] = 1.0f;
-		// printf("parser.c line 56:vert: %f %f %f\n", object->vertices[*vert_i][0], object->vertices[*vert_i][1], object->vertices[*vert_i][2]);
 		*vert_i += 1;
 	}
 	else if (ft_strcmp(splitted_line[0], "f") == 0)
@@ -70,7 +67,6 @@ static void	parse_line(t_object *object, char *line, int *vert_i, int *face_i)
 			}
 			*face_i += 1;
 		}
-		// printf("vert count: %i\n", *face_i);
 	}
 }
 
@@ -99,7 +95,6 @@ static int	count_vertex(char *file_name, int *face_count, int *vertices_count)
 			while (splitted_line[tab_len] != 0)
 				tab_len++;
 			*face_count += tab_len - 3;
-			// printf("line: %i\n", *face_count);
 		}
 		free(line);
 		tab_len = 0;
@@ -116,11 +111,11 @@ int			object_loader(char *file_name, t_object *object)
 	int		vertices;
 	int		faces;
 
+	printf("Loading object...\n");
 	err = 0;
 	faces = 0;
 	vertices = 0;
 	count_vertex(file_name, &faces, &vertices);
-	printf("parser.c line 92: v: %i, f: %i\n", vertices, faces);
 	if (!(object->faces = (int**)malloc(faces * sizeof(int*))))
 		return (-1);
 	if (!(object->vertices = (float**)malloc(vertices * sizeof(float*))))
@@ -138,5 +133,6 @@ int			object_loader(char *file_name, t_object *object)
 		free(line);
 	}
 	err = close(fd);
+	printf("Object loaded: %i vertices, %i faces\n", vertices, faces);
 	return (0);
 }
