@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 11:30:29 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/11 13:04:23 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/11 14:15:01 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static GLchar		*load_shader(char *filename)
 {
-	int		fd;
-	char	*line;
-	char	*result;
-	int		err;
-	char	*tmp;
+	int				fd;
+	char			*line;
+	char			*result;
+	int				err;
+	char			*tmp;
 
 	fd = open(filename, O_RDONLY);
 	result = ft_strdup("");
@@ -35,12 +35,13 @@ static GLchar		*load_shader(char *filename)
 	return (result);
 }
 
-GLuint			create_shader_program()
+GLuint				create_shader_program(void)
 {
 	const GLchar	*vertex_shader;
-	const GLchar 	*fragment_shader;
+	const GLchar	*fragment_shader;
 	GLuint			vs;
 	GLuint			fs;
+	GLuint			shader_programme;
 
 	vertex_shader = (const GLchar *)load_shader(VERTEX_SHADER);
 	fragment_shader = (const GLchar *)load_shader(FRAGMENT_SHADER);
@@ -50,11 +51,11 @@ GLuint			create_shader_program()
 	fs = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fs, 1, &(fragment_shader), NULL);
 	glCompileShader(fs);
-	GLuint shader_programme = glCreateProgram();
+	shader_programme = glCreateProgram();
 	glAttachShader(shader_programme, fs);
 	glAttachShader(shader_programme, vs);
 	glLinkProgram(shader_programme);
 	free((char *)vertex_shader);
 	free((char *)fragment_shader);
-	return(shader_programme);
+	return (shader_programme);
 }

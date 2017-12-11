@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 10:44:13 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/11 12:59:27 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/11 14:17:30 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ struct			s_object
 	float		**vertices;
 	float		*colors;
 	float		*points;
+	float 		*uv_map;
 	int			**faces;
 	int			shading;
 	double		rotation_y;
 	char		*texture;
-	float 		*uv_map;
 	int 		transition_state;
 	float		transition_value;
 	GLfloat		*projection_matrix;
@@ -65,6 +65,9 @@ struct			s_object
 	GLfloat		*scale_matrix;
 	GLfloat		*rotation_matrix;
 	GLfloat		*view_matrix;
+	GLuint		vbo;
+	GLuint		vbo_colors;
+	GLuint		vbo_uvs;
 	t_vector	position;
 };
 
@@ -91,6 +94,15 @@ void			rotation_y_matrix(GLfloat *matrix, float angle);
 void			projection_matrix(GLfloat *matrix, float fov, float aspect);
 void			translation_matrix(GLfloat *matrix, float x, float y, float z);
 void			scale_matrix(GLfloat *matrix, float x, float y, float z);
+
+/*
+** Data binding
+*/
+
+GLint			create_vbo(int size, int data_size, float *data);
+void			bind_vbo(int index, GLuint id, int size);
+void			pass_uniforms(t_object *obj, GLuint shader_programme);
+void			upload_texture(char *texture_data);
 
 GLuint			create_shader_program();
 void			load_texture(t_env *e);

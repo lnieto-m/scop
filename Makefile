@@ -6,7 +6,7 @@
 #    By: hivian <hivian@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/25 10:17:30 by hivian            #+#    #+#              #
-#    Updated: 2017/12/11 12:58:06 by lnieto-m         ###   ########.fr        #
+#    Updated: 2017/12/11 14:15:56 by lnieto-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC  		= main.c \
 			colors.c \
 			init.c \
 			shaders.c \
+			shader_data.c \
 
 OBJ  		= $(SRC:%.c=objs/%.o)
 

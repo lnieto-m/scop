@@ -6,7 +6,7 @@
 /*   By: hivian <hivian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/15 15:11:00 by hivian            #+#    #+#             */
-/*   Updated: 2017/12/11 12:59:36 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/11 13:21:06 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int					loop_hook(t_env *e)
 GLfloat				*uv_map(int size)
 {
 	GLfloat	*uv_map;
-	int 	i;
+	int		i;
 
 	i = 0;
 	if (!(uv_map = (GLfloat*)malloc(size * 2 * sizeof(GLfloat))))

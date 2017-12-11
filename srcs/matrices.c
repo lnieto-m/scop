@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 11:30:43 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/08 11:21:36 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/11 13:21:37 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** [3][7][11][15]
 */
 
-GLfloat 	*create_matrix(int size)
+GLfloat		*create_matrix(int size)
 {
 	GLfloat		*matrix;
 

@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 11:01:33 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/11 12:34:59 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/11 14:19:18 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static void	parse_line(t_object *object, char *line, int *vert_i, int *face_i)
 				object->faces[*face_i][0] = ft_atoi(splitted_line[1]);
 				object->faces[*face_i][1] = ft_atoi(splitted_line[index + 1]);
 				object->faces[*face_i][2] = ft_atoi(splitted_line[index + 2]);
-				printf("%i %i %i\n", object->faces[*face_i][0], object->faces[*face_i][1], object->faces[*face_i][2]);
 				index++;
 				*face_i += 1;
 			}

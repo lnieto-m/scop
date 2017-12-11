@@ -6,14 +6,15 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 14:55:48 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/07 17:54:58 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2017/12/11 13:18:27 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-double		frand_a_b(double a, double b){
-	return ((rand() / (double)RAND_MAX) *(b - a) + a);
+double		frand_a_b(double a, double b)
+{
+	return ((rand() / (double)RAND_MAX) * (b - a) + a);
 }
 
 float		*generate_colors(int obj_size)
