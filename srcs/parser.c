@@ -6,26 +6,54 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 11:01:33 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/11 14:19:18 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2018/05/08 12:29:01 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
+
+static void free_splitted_line(char **line, int size)
+{
+	int		index;
+
+	index = 0;
+	while (index < size)
+		free(line[index++]);
+	free(line);
+}
 
 static void	parse_line(t_object *object, char *line, int *vert_i, int *face_i)
 {
 	char	**splitted_line;
 	int		tab_len;
 	int 	i;
+	int 	**int_tmp;
+	float	**float_tmp;
 
+	int_tmp = NULL;
+	float_tmp = NULL;
+	splitted_line = NULL;
 	i = 1;
 	tab_len = 0;
 	if (ft_strcmp(line, "") == 0
 		|| (splitted_line = ft_strsplit(line, ' ')) == NULL
-		|| ft_strcmp(splitted_line[0], "#") == 0)
+		|| ft_strcmp(splitted_line[0], "#") == 0/*
+		|| ft_strcmp(splitted_line[0], "v") != 0*/)
+	{
+		if (splitted_line != NULL)
+		{
+			while (splitted_line[tab_len] != 0)
+				tab_len++;
+			free_splitted_line(splitted_line, tab_len);
+		}
 		return;
+	}
+	printf("%s, %i\n", line, ft_strcmp(splitted_line[0], "#"));
 	if (ft_strcmp(splitted_line[0], "v") == 0)
 	{
+		float_tmp = (float **)realloc(object->vertices, sizeof(float *) * (*vert_i + 1));
+		if (float_tmp != NULL)
+			object->vertices = float_tmp;
 		while (splitted_line[tab_len] != 0)
 			tab_len++;
 		if(!(object->vertices[*vert_i] = (float *)malloc(4 * sizeof(float))))
@@ -45,6 +73,9 @@ static void	parse_line(t_object *object, char *line, int *vert_i, int *face_i)
 			tab_len++;
 		if (tab_len > 4)
 		{
+			int_tmp = (int **)realloc(object->faces, sizeof(int *) * (*face_i + tab_len - 3));
+			if (int_tmp != NULL)
+				object->faces = int_tmp;
 			int index = 1;
 			while (index <= tab_len - 3)
 			{
@@ -57,6 +88,9 @@ static void	parse_line(t_object *object, char *line, int *vert_i, int *face_i)
 				*face_i += 1;
 			}
 		} else {
+			int_tmp = (int **)realloc(object->faces, sizeof(int *) * (*face_i + 1));
+			if (int_tmp != NULL)
+				object->faces = int_tmp;
 			if(!(object->faces[*face_i] = (int *)malloc(3 * sizeof(int))))
 				return;
 			while (i < tab_len)
@@ -67,71 +101,60 @@ static void	parse_line(t_object *object, char *line, int *vert_i, int *face_i)
 			*face_i += 1;
 		}
 	}
+	free_splitted_line(splitted_line, tab_len);
 }
 
-static int	count_vertex(char *file_name, int *face_count, int *vertices_count)
+static char	**load_file(char *file_name, int *file_size)
 {
-	char	**splitted_line;
 	int		fd;
+	char	**loaded_file;
 	char	*line;
-	int		err;
-	int		tab_len;
+	char	**loaded_tmp;
 
-	tab_len = 0;
+	loaded_file = NULL;
 	fd = open(file_name, O_RDONLY);
-	while ((err = get_next_line(fd, &line)) > 0)
+	while (get_next_line(fd, &line) > 0)
 	{
-		if (err == -1)
-			return (err);
-		if (ft_strcmp(line, "") == 0
-			|| (splitted_line = ft_strsplit(line, ' ')) == NULL
-			|| ft_strcmp(splitted_line[0], "#") == 0)
-			continue;
-		if (ft_strcmp(splitted_line[0], "v") == 0)
-			*vertices_count += 1;
-		else if (ft_strcmp(splitted_line[0], "f") == 0)
-		{
-			while (splitted_line[tab_len] != 0)
-				tab_len++;
-			*face_count += tab_len - 3;
-		}
+		*file_size += 1;
+		loaded_tmp = (char **)realloc(loaded_file, *file_size * sizeof(char *));
+		if (loaded_tmp != NULL)
+			loaded_file = loaded_tmp;
+		else
+			return (NULL);
+		loaded_file = loaded_tmp;
+		loaded_file[*file_size - 1] = ft_strdup(line);
 		free(line);
-		tab_len = 0;
 	}
 	close(fd);
-	return (0);
+	return (loaded_file);
 }
 
 int			object_loader(char *file_name, t_object *object)
 {
-	int		fd;
-	int		err;
-	char	*line;
+	int		file_index;
 	int		vertices;
 	int		faces;
 
 	printf("Loading object...\n");
-	err = 0;
+	file_index = 0;
 	faces = 0;
 	vertices = 0;
-	count_vertex(file_name, &faces, &vertices);
-	if (!(object->faces = (int**)malloc(faces * sizeof(int*))))
-		return (-1);
-	if (!(object->vertices = (float**)malloc(vertices * sizeof(float*))))
-		return (-1);
+	object->loaded_file = NULL;
+	object->file_size = 0;
+	object->loaded_file = load_file(file_name, &object->file_size);
+	object->faces = NULL;
+	object->vertices = NULL;
+	while (file_index < object->file_size)
+	{
+		parse_line(object, object->loaded_file[file_index], &vertices, &faces);
+		file_index++;
+	}
 	object->vertices_count = vertices;
 	object->face_count = faces;
-	fd = open(file_name, O_RDONLY);
-	vertices = 0;
-	faces = 0;
-	while ((err = get_next_line(fd, &line)) > 0)
-	{
-		if (err == -1)
-			return (err);
-		parse_line(object, line, &vertices, &faces);
-		free(line);
-	}
-	err = close(fd);
 	printf("Object loaded: %i vertices, %i faces\n", vertices, faces);
+	file_index = 0;
+	while (file_index < object->file_size)
+		free(object->loaded_file[file_index++]);
+	free(object->loaded_file);
 	return (0);
 }

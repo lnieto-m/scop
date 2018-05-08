@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 14:41:45 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/11 14:23:02 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2018/03/21 14:36:38 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ void		translation_key(int keycode, t_env *e)
 
 void		exit_key(int keycode, t_env *e)
 {
+	int		index;
+
+	index = 0;
 	if (keycode == K_ESC)
 	{
 		free(e->object.colors);
@@ -41,6 +44,13 @@ void		exit_key(int keycode, t_env *e)
 		free(e->object.scale_matrix);
 		free(e->object.rotation_matrix);
 		free(e->object.view_matrix);
+		while (index < e->object.face_count)
+			free(e->object.faces[index++]);
+		free(e->object.faces);
+		index = 0;
+		while (index < e->object.vertices_count)
+			free(e->object.vertices[index++]);
+		free(e->object.vertices);
 		glDeleteProgram(e->shader_programme);
 		exit(EXIT_SUCCESS);
 	}

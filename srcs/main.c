@@ -6,7 +6,7 @@
 /*   By: hivian <hivian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/15 15:11:00 by hivian            #+#    #+#             */
-/*   Updated: 2017/12/11 13:21:06 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2018/03/21 16:02:22 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ int					main(int ac, char **av)
 {
 	t_env			e;
 
-	printf("test: %i\n", ft_atoi("7/3/7"));
-	if (ac > 1)
-		init_object(&e.object, av[1]);
+	if (ac < 1)
+		return (0);
+	init_object(&e.object, av[1]);
 	if (!(e.mlx = mlx_init()))
 	{
 		ft_putendl("Env error");

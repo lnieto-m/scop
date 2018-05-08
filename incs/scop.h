@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 10:44:13 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/12/11 14:17:30 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2018/05/08 11:14:04 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ struct			s_vector
 
 struct			s_object
 {
+	char		**loaded_file;
+	int			file_size;
 	int			face_count;
 	int			vertices_count;
 	char		*name;
