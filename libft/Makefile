@@ -6,7 +6,7 @@
 #    By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 14:59:47 by lnieto-m          #+#    #+#              #
-#    Updated: 2017/11/25 11:03:30 by lnieto-m         ###   ########.fr        #
+#    Updated: 2018/05/09 11:11:07 by lnieto-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC_NAME = libft/ft_isdigit.c \
 		   libft/ft_strmap.c \
 		   libft/ft_strnew.c \
 		   libft/ft_strtrim.c \
+		   libft/ft_strtrim_negative.c \
 		   libft/ft_isalnum.c \
 		   libft/ft_memalloc.c \
 		   libft/ft_memmove.c \

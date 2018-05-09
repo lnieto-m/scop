@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 11:01:33 by lnieto-m          #+#    #+#             */
-/*   Updated: 2018/05/08 12:29:01 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2018/05/09 13:03:04 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ static void	parse_line(t_object *object, char *line, int *vert_i, int *face_i)
 	splitted_line = NULL;
 	i = 1;
 	tab_len = 0;
-	if (ft_strcmp(line, "") == 0
+	if (line == NULL
+		|| ft_strcmp(line, "") == 0
 		|| (splitted_line = ft_strsplit(line, ' ')) == NULL
-		|| ft_strcmp(splitted_line[0], "#") == 0/*
-		|| ft_strcmp(splitted_line[0], "v") != 0*/)
+		|| ft_strcmp(splitted_line[0], "#") == 0)
 	{
 		if (splitted_line != NULL)
 		{
@@ -48,7 +48,6 @@ static void	parse_line(t_object *object, char *line, int *vert_i, int *face_i)
 		}
 		return;
 	}
-	printf("%s, %i\n", line, ft_strcmp(splitted_line[0], "#"));
 	if (ft_strcmp(splitted_line[0], "v") == 0)
 	{
 		float_tmp = (float **)realloc(object->vertices, sizeof(float *) * (*vert_i + 1));
@@ -112,6 +111,7 @@ static char	**load_file(char *file_name, int *file_size)
 	char	**loaded_tmp;
 
 	loaded_file = NULL;
+	line = NULL;
 	fd = open(file_name, O_RDONLY);
 	while (get_next_line(fd, &line) > 0)
 	{
@@ -122,7 +122,10 @@ static char	**load_file(char *file_name, int *file_size)
 		else
 			return (NULL);
 		loaded_file = loaded_tmp;
-		loaded_file[*file_size - 1] = ft_strdup(line);
+		if (*file_size == 1)
+			loaded_file[*file_size - 1] = ft_strtrim_negative(line);
+		else
+			loaded_file[*file_size - 1] = ft_strdup(line);
 		free(line);
 	}
 	close(fd);
@@ -145,10 +148,7 @@ int			object_loader(char *file_name, t_object *object)
 	object->faces = NULL;
 	object->vertices = NULL;
 	while (file_index < object->file_size)
-	{
-		parse_line(object, object->loaded_file[file_index], &vertices, &faces);
-		file_index++;
-	}
+		parse_line(object, object->loaded_file[file_index++], &vertices, &faces);
 	object->vertices_count = vertices;
 	object->face_count = faces;
 	printf("Object loaded: %i vertices, %i faces\n", vertices, faces);

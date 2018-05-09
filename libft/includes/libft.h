@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 11:27:36 by lnieto-m          #+#    #+#             */
-/*   Updated: 2017/11/23 13:00:00 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2018/05/09 11:10:40 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char				**ft_strsplit(const char *s, char c);
 char				*ft_strmap(char const *s, char (*f)(char));
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strtrim(char const *s);
+char				*ft_strtrim_negative(char const *s);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 void				ft_striter(char *s, void (*f)(char *));
