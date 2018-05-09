@@ -6,7 +6,7 @@
 #    By: hivian <hivian@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/25 10:17:30 by hivian            #+#    #+#              #
-#    Updated: 2017/12/11 14:15:56 by lnieto-m         ###   ########.fr        #
+#    Updated: 2018/05/09 15:20:49 by lnieto-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ LIBS		= -L libft/ -lft -L minilibx_macos/ -lmlx -framework OpenGL -framework App
 
 SRC  		= main.c \
 			parser.c \
+			face_parsing.c \
+			vertex_parsing.c \
 			display.c \
 			matrices.c \
 			key_handling.c \

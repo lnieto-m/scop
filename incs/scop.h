@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 10:44:13 by lnieto-m          #+#    #+#             */
-/*   Updated: 2018/05/08 11:14:04 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2018/05/09 15:20:32 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,10 @@ struct			s_env
 void			display(t_object object, GLint shader_programme);
 void			init_object(t_object *obj, char *filename);
 int				object_loader(char *file_name, t_object *object);
+void 			face_parsing(t_object *object, int *face_i, int tab_len,
+							char **splitted_line);
+void			vertex_parsing(t_object *object, int *vert_i, int tab_len,
+							char **splitted_line);
 GLfloat			*uv_map(int size);
 
 /*
