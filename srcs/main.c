@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hivian <hivian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/04/15 15:11:00 by hivian            #+#    #+#             */
-/*   Updated: 2018/03/21 16:02:22 by lnieto-m         ###   ########.fr       */
+/*   Created: 2018/05/09 17:23:37 by lnieto-m          #+#    #+#             */
+/*   Updated: 2018/05/10 12:32:30 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ GLfloat				*uv_map(int size)
 	i = 0;
 	if (!(uv_map = (GLfloat*)malloc(size * 2 * sizeof(GLfloat))))
 		return (NULL);
-	while (i < size * 2 && i + 6 < size * 2)
+	while (i < size * 2 && i + 6 <= size * 2)
 	{
 		uv_map[i++] = 0.0f;
 		uv_map[i++] = 1.0f;

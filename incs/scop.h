@@ -6,7 +6,7 @@
 /*   By: lnieto-m <lnieto-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 10:44:13 by lnieto-m          #+#    #+#             */
-/*   Updated: 2018/05/09 15:20:32 by lnieto-m         ###   ########.fr       */
+/*   Updated: 2018/05/10 12:34:34 by lnieto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define FRAGMENT_SHADER	"./shaders/fragment_shader.shader"
 
 typedef struct s_env	t_env;
-typedef struct s_vector t_vector;
+typedef struct s_vector	t_vector;
 typedef struct s_object	t_object;
 typedef int				(*t_tab)(int, int, int, t_env *);
 
@@ -55,12 +55,12 @@ struct			s_object
 	float		**vertices;
 	float		*colors;
 	float		*points;
-	float 		*uv_map;
+	float		*uv_map;
 	int			**faces;
 	int			shading;
 	double		rotation_y;
 	char		*texture;
-	int 		transition_state;
+	int			transition_state;
 	float		transition_value;
 	GLfloat		*projection_matrix;
 	GLfloat		*translation_matrix;
@@ -85,7 +85,7 @@ struct			s_env
 void			display(t_object object, GLint shader_programme);
 void			init_object(t_object *obj, char *filename);
 int				object_loader(char *file_name, t_object *object);
-void 			face_parsing(t_object *object, int *face_i, int tab_len,
+void			face_parsing(t_object *object, int *face_i, int tab_len,
 							char **splitted_line);
 void			vertex_parsing(t_object *object, int *vert_i, int tab_len,
 							char **splitted_line);
@@ -95,7 +95,7 @@ GLfloat			*uv_map(int size);
 ** Matrices
 */
 
-GLfloat 		*create_matrix(int size);
+GLfloat			*create_matrix(int size);
 void			rotation_y_matrix(GLfloat *matrix, float angle);
 void			projection_matrix(GLfloat *matrix, float fov, float aspect);
 void			translation_matrix(GLfloat *matrix, float x, float y, float z);

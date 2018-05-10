@@ -1,7 +1,0 @@
-model       |done
-colors      |done
-perspective |done
-rotations   |done
-translation |done
-textures    |done
-parsing verification
